@@ -9,6 +9,8 @@ void set_pix(uint16_t, uint16_t, uint8_t, uint8_t, uint8_t);
 
 void line(uint16_t y, uint16_t right, uint16_t left)
 {
+	if (left > right)
+		printf("Error: left bigger than right\n");
 	uint16_t start = image.width * y + left;
 	for (int i = start; i <= start - left + right; i++) {
 		pixel_t *pixel = image.pixels + i;
@@ -38,13 +40,17 @@ void swap(Vertice *num1, Vertice *num2)
 	*num1 = *num2;
 	*num2 = temp;
 }
-
+float temp;
 void fillBottomFlatTriangle(Vertice v1, Vertice v2, uint16_t v3DOTx)
 {
-	int myNum = 1996;
 	// v2.y == v3.y
 	float invslope1 = (float) (v2.x - v1.x) / (v2.y - v1.y);
 	float invslope2 = (float) (v3DOTx - v1.x) / (v2.y - v1.y);
+	if (invslope2 > invslope1) {
+		temp = invslope1;
+		invslope1 = invslope2;
+		invslope2 = invslope1;
+	}
 
 	float curx1 = v1.x;
 	float curx2 = v1.x;
@@ -61,6 +67,11 @@ void fillTopFlatTriangle(Vertice v1, uint16_t v2DOTx, Vertice v3)
 	// v1.y == v2.y
 	float invslope1 = (float) (v3.x - v1.x) / (v3.y - v1.y);
 	float invslope2 = (float) (v3.x - v2DOTx) / (v3.y - v1.y);
+	if (invslope2 > invslope1) {
+		temp = invslope1;
+		invslope1 = invslope2;
+		invslope2 = invslope1;
+	}
 
 	float curx1 = v3.x;
 	float curx2 = v3.x;
