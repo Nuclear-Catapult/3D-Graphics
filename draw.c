@@ -99,9 +99,9 @@ void circle(Vertice center, uint16_t radius)
 	const float twelthofPI = 3.14159265 / 12;
 	Vertice outerVert[24];
 	outerVert[0] = (Vertice) { center.x + radius, center.y };
-	outerVert[6] = (Vertice) { center.x, center.y - radius };
+	outerVert[6] = (Vertice) { center.x, center.y + radius };
 	outerVert[12] = (Vertice) { center.x - radius, center.y };
-	outerVert[18] = (Vertice) { center.x, center.y + radius };
+	outerVert[18] = (Vertice) { center.x, center.y - radius };
 
 	for (int quadrant = 0; quadrant < 4; quadrant++)
 		for (int i = 1; i < 6; i++) {
