@@ -9,8 +9,8 @@ void set_pix(uint16_t, uint16_t, uint8_t, uint8_t, uint8_t);
 
 void line(uint16_t y, uint16_t right, uint16_t left)
 {
-	uint16_t start = image.width * y + right;
-	for (int i = start; i < start + left - right; i++) {
+	uint16_t start = image.width * y + left;
+	for (int i = start; i <= start - left + right; i++) {
 		pixel_t *pixel = image.pixels + i;
 		pixel->red = 255;
 		pixel->green = 0;
@@ -20,8 +20,8 @@ void line(uint16_t y, uint16_t right, uint16_t left)
 
 void blue_line(uint16_t y, uint16_t right, uint16_t left)
 {
-	uint16_t start = image.width * y + right;
-	for (int i = start; i < start + left - right; i++) {
+	uint16_t start = image.width * y + left;
+	for (int i = start; i <= start - left + right; i++) {
 		pixel_t *pixel = image.pixels + i;
 		pixel->red = 0;
 		pixel->green = 0;
@@ -106,9 +106,11 @@ void circle(Vertice center, uint16_t radius)
 	for (int quadrant = 0; quadrant < 4; quadrant++)
 		for (int i = 1; i < 6; i++) {
 			float input = twelthofPI*quadrant*6+i*twelthofPI;
-			outerVert[quadrant*6+i] = (Vertice) { cos(input)*radius+center.x, sin(input)*radius+center.y };
+			outerVert[quadrant*6+i] = (Vertice) { (uint16_t) (cos(input)*radius+center.x), (uint16_t) (sin(input)*radius+center.y) };
 			triangle(center, outerVert[quadrant*6+i], outerVert[quadrant*6+i-1]);
 		}
+	for (int i = 0; i < 24; i++)
+		printf("Vert[%d] = { %hu, %hu }\n", i, outerVert[i].x, outerVert[i].y);
 }
 
 void draw()
