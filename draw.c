@@ -64,7 +64,7 @@ void fillTopFlatTriangle(Vertice v1, uint16_t v2DOTx, Vertice v3)
 	float curx1 = v3.x;
 	float curx2 = v3.x;
 
-	for (int i = 0; i > v1.y; i--) {
+	for (int i = v3.y; i > v1.y; i--) {
 		blue_line(i, (uint16_t)curx1, (uint16_t)curx2);
 		curx1 -= invslope1;
 		curx2 -= invslope2;
