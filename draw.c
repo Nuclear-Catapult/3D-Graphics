@@ -102,12 +102,7 @@ void draw()
 
 	image.pixels = calloc(image.width * image.height, sizeof(pixel_t));
 	
-	memset(image.pixels, '0', image.height*image.width*sizeof(pixel_t));
+	memset(image.pixels, 0, image.height*image.width*sizeof(pixel_t));
 
 	triangle((Vertice) {90, 10}, (Vertice) {50, 50}, (Vertice) {99, 99});
-
-	line(60, 0, 99);
-	line(61, 1, 98);
-	line(62, 2, 97);
-	line(63, 3, 96);
 }
