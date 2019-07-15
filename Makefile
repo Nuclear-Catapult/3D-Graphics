@@ -1,5 +1,5 @@
 run: main.o draw.o
-	gcc -o run main.o draw.o -lpng
+	gcc -o run main.o draw.o -lpng -lm
 
 main.o: main.c image.h
 	gcc -g -c main.c
