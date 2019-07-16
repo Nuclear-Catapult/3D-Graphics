@@ -10,21 +10,8 @@ int save_png_to_file(const char *path);
 
 int frame = 0;
 
-void diagonal()
-{
-	for (int i = 0; i < 500; i++) {
-		set_pix(i, i, 255, 0, 0);
-	char str[12];
-	sprintf(str, "pic%04d.png", frame++);
-    if (save_png_to_file(str))
-	fprintf(stderr, "Error writing file.\n");
-	}
-}
-
 void line(uint16_t y, uint16_t right, uint16_t left)
 {
-	if (left > right)
-		printf("Error: left bigger than right\n");
 	int start = image.width * y + left;
 	for (int i = start; i <= start - left + right; i++) {
 		pixel_t *pixel = image.pixels + i;
@@ -32,10 +19,6 @@ void line(uint16_t y, uint16_t right, uint16_t left)
 		pixel->green = 0;
 		pixel->blue = 0;
 	}
-	char str[12];
-	sprintf(str, "pic%04d.png", frame++);
-    if (save_png_to_file(str))
-	fprintf(stderr, "Error writing file.\n");
 }
 
 void blue_line(uint16_t y, uint16_t right, uint16_t left)
@@ -47,14 +30,15 @@ void blue_line(uint16_t y, uint16_t right, uint16_t left)
 		pixel->green = 0;
 		pixel->blue = 255;
 	}
-	char str[12];
+	/*char str[12];
 	sprintf(str, "pic%04d.png", frame++);
     if (save_png_to_file(str))
-	fprintf(stderr, "Error writing file.\n");
+	fprintf(stderr, "Error writing file.\n"); */
 }
 
 typedef struct { uint16_t x;
 		 uint16_t y; } Vertice;
+Vertice centroid;
 
 void swap(Vertice *num1, Vertice *num2)
 {
@@ -113,7 +97,7 @@ void triangle(Vertice v1, Vertice v2, Vertice v3)
 		swap(&v2, &v3);
 	if (v1.y > v2.y)
 		swap(&v1, &v2);
-	
+
 	// v1.y <= v2.y <= v3.y
 	if (v2.y == v3.y) {
 		fillBottomFlatTriangle(v1, v2, v3.x);
@@ -147,14 +131,43 @@ void circle(Vertice center, uint16_t radius)
 	triangle(center, outerVert[0], outerVert[23]);
 }
 
+Vertice rotate(Vertice v, float theta)
+{
+	v.x -= centroid.x;
+	v.y -= centroid.y;
+
+	float sine = sin(theta);
+	float cosine = cos(theta);
+	float temp = v.x;
+
+	v.x = (uint16_t)(v.x*cosine - v.y*sine);
+	v.y = (uint16_t)(temp*sine + v.y*cosine);
+
+	v.x += centroid.x;
+	v.y += centroid.y;
+
+	return v;
+}
+
 void draw()
 {
 	image.width = 500;
 	image.height = 500;
 
 	image.pixels = calloc(image.width * image.height, sizeof(pixel_t));
-	
-	memset(image.pixels, 'a', image.height*image.width*sizeof(pixel_t));
 
-	circle((Vertice) {249, 249}, 200);
+	Vertice v1 = { 250, 200 };
+	Vertice v2 = { 400, 400 };
+	Vertice v3 = { 100, 330 };
+
+	centroid.x = (v1.x + v2.x + v3.x) / 3;
+	centroid.y = (v1.y + v2.y + v3.y) / 3;
+
+	for (float i = 0; i < 50; i+=0.05) {
+		memset(image.pixels, 0, image.height*image.width*sizeof(pixel_t));
+		triangle(rotate(v1, i), rotate(v2, i), rotate(v3, i));
+		char str[12];
+		sprintf(str, "pic%04d.png", frame++);
+    		save_png_to_file(str);
+	}
 }
