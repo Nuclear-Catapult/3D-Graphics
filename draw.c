@@ -119,11 +119,12 @@ void circle(Vertice center, uint16_t radius)
 			float input = twelthofPI*quadrant*6+i*twelthofPI;
 			outerVert[quadrant*6+i] = (Vertice) { (uint16_t) (cos(input)*radius+center.x), (uint16_t) (sin(input)*radius+center.y) };
 		}
-		printf("Vert[0] = { %hu, %hu }\n", outerVert[0].x, outerVert[0].y);
+	printf("Vert[0] = { %hu, %hu }\n", outerVert[0].x, outerVert[0].y);
 	for (int i = 1; i < 24; i++) {
 		printf("Vert[%d] = { %hu, %hu }\n", i, outerVert[i].x, outerVert[i].y);
 		triangle(center, outerVert[i], outerVert[i-1]);
 	}
+	triangle(center, outerVert[0], outerVert[23]);
 }
 
 void draw()
