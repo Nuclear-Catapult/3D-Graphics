@@ -17,7 +17,7 @@ void set_pix(size_t x, size_t y, uint8_t r, uint8_t g, uint8_t b)
 	pixel->blue = b;
 }
 
-static int save_png_to_file(const char *path)
+int save_png_to_file(const char *path)
 {
     FILE *fp;
     png_structp png_ptr = NULL;
@@ -91,11 +91,6 @@ int main()
     int status = 0;
 
 	draw();
-
-    if (save_png_to_file("image.png")) {
-	fprintf(stderr, "Error writing file.\n");
-	status = -1;
-    }
 
     free(image.pixels);
 

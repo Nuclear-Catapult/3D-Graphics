@@ -6,29 +6,51 @@
 #include "image.h"
 
 void set_pix(uint16_t, uint16_t, uint8_t, uint8_t, uint8_t);
+int save_png_to_file(const char *path);
+
+int frame = 0;
+
+void diagonal()
+{
+	for (int i = 0; i < 500; i++) {
+		set_pix(i, i, 255, 0, 0);
+	char str[12];
+	sprintf(str, "pic%04d.png", frame++);
+    if (save_png_to_file(str))
+	fprintf(stderr, "Error writing file.\n");
+	}
+}
 
 void line(uint16_t y, uint16_t right, uint16_t left)
 {
 	if (left > right)
 		printf("Error: left bigger than right\n");
-	uint16_t start = image.width * y + left;
+	int start = image.width * y + left;
 	for (int i = start; i <= start - left + right; i++) {
 		pixel_t *pixel = image.pixels + i;
 		pixel->red = 255;
 		pixel->green = 0;
 		pixel->blue = 0;
 	}
+	char str[12];
+	sprintf(str, "pic%04d.png", frame++);
+    if (save_png_to_file(str))
+	fprintf(stderr, "Error writing file.\n");
 }
 
 void blue_line(uint16_t y, uint16_t right, uint16_t left)
 {
-	uint16_t start = image.width * y + left;
+	int start = image.width * y + left;
 	for (int i = start; i <= start - left + right; i++) {
 		pixel_t *pixel = image.pixels + i;
 		pixel->red = 0;
 		pixel->green = 0;
 		pixel->blue = 255;
 	}
+	char str[12];
+	sprintf(str, "pic%04d.png", frame++);
+    if (save_png_to_file(str))
+	fprintf(stderr, "Error writing file.\n");
 }
 
 typedef struct { uint16_t x;
@@ -119,9 +141,7 @@ void circle(Vertice center, uint16_t radius)
 			float input = twelthofPI*quadrant*6+i*twelthofPI;
 			outerVert[quadrant*6+i] = (Vertice) { (uint16_t) (cos(input)*radius+center.x), (uint16_t) (sin(input)*radius+center.y) };
 		}
-	printf("Vert[0] = { %hu, %hu }\n", outerVert[0].x, outerVert[0].y);
 	for (int i = 1; i < 24; i++) {
-		printf("Vert[%d] = { %hu, %hu }\n", i, outerVert[i].x, outerVert[i].y);
 		triangle(center, outerVert[i], outerVert[i-1]);
 	}
 	triangle(center, outerVert[0], outerVert[23]);
@@ -129,12 +149,12 @@ void circle(Vertice center, uint16_t radius)
 
 void draw()
 {
-	image.width = 100;
-	image.height = 100;
+	image.width = 500;
+	image.height = 500;
 
 	image.pixels = calloc(image.width * image.height, sizeof(pixel_t));
 	
-	memset(image.pixels, 0, image.height*image.width*sizeof(pixel_t));
+	memset(image.pixels, 'a', image.height*image.width*sizeof(pixel_t));
 
-	circle((Vertice) {50, 50}, 40);
+	circle((Vertice) {249, 249}, 200);
 }
