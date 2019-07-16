@@ -49,7 +49,7 @@ void fillBottomFlatTriangle(Vertice v1, Vertice v2, uint16_t v3DOTx)
 	if (invslope2 > invslope1) {
 		temp = invslope1;
 		invslope1 = invslope2;
-		invslope2 = invslope1;
+		invslope2 = temp;
 	}
 
 	float curx1 = v1.x;
@@ -70,7 +70,7 @@ void fillTopFlatTriangle(Vertice v1, uint16_t v2DOTx, Vertice v3)
 	if (invslope2 < invslope1) {
 		temp = invslope1;
 		invslope1 = invslope2;
-		invslope2 = invslope1;
+		invslope2 = temp;
 	}
 
 	float curx1 = v3.x;
@@ -118,10 +118,12 @@ void circle(Vertice center, uint16_t radius)
 		for (int i = 1; i < 6; i++) {
 			float input = twelthofPI*quadrant*6+i*twelthofPI;
 			outerVert[quadrant*6+i] = (Vertice) { (uint16_t) (cos(input)*radius+center.x), (uint16_t) (sin(input)*radius+center.y) };
-			printf("%d\n", quadrant*6+i);
 		}
-	for (int i = 1; i < 24; i++)
+		printf("Vert[0] = { %hu, %hu }\n", outerVert[0].x, outerVert[0].y);
+	for (int i = 1; i < 24; i++) {
+		printf("Vert[%d] = { %hu, %hu }\n", i, outerVert[i].x, outerVert[i].y);
 		triangle(center, outerVert[i], outerVert[i-1]);
+	}
 }
 
 void draw()
