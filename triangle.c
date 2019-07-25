@@ -46,14 +46,8 @@ void draw_triangle(triangle_t *this)
 		swap(&this->v1, &this->v2);
 
 	// v1.y <= v2.y <= v3.y
-	if (this->v2.y == this->v3.y) {
-		fillTopFlatTriangle(this->v1, this->v2, this->v3.x);
-	} else if (this->v1.y == this->v2.y) {
-		fillBottomFlatTriangle(this->v1, this->v2.x, this->v3);
-	} else {
-		uint16_t newX = (uint16_t) (this->v1.x +
-		((float)(this->v2.y - this->v1.y) / (float)(this->v3.y - this->v1.y)) * (this->v3.x - this->v1.x));
-		fillTopFlatTriangle(this->v1, this->v2, newX);
-		fillBottomFlatTriangle(this->v2, newX, this->v3);
-	}
+	uint16_t newX = (uint16_t) (this->v1.x +
+	((float)(this->v2.y - this->v1.y) / (float)(this->v3.y - this->v1.y)) * (this->v3.x - this->v1.x));
+	fillTopFlatTriangle(this->v1, this->v2, newX);
+	fillBottomFlatTriangle(this->v2, newX, this->v3);
 }

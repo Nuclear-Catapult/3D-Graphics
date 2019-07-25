@@ -1,5 +1,6 @@
 #pragma once
 #include "line.h"
+#include "vertice.h"
 
 typedef struct {
 	Vertice v1;
