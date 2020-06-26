@@ -1,4 +1,5 @@
 #include "triangle.h"
+#include "line.h"
 
 void fillTopFlatTriangle(union Vertice v1, union Vertice v2, uint16_t v3DOTx)
 {

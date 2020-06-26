@@ -1,5 +1,4 @@
 #pragma once
-#include "line.h"
 #include "vertice.h"
 
 struct Triangle{
