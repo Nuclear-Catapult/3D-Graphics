@@ -1,7 +1,7 @@
 #pragma once
 #include <stdint.h>
 
-typedef union {
+union Vertice {
 	// This feature is an anonymous struct added to C11
 	struct {
 		uint16_t x;
@@ -12,6 +12,6 @@ typedef union {
 	uint64_t vert64;
 	// insert floats only when using swap function
 	float swap;
-} Vertice;
+};
 
-void swap(Vertice *v1, Vertice *v2);
+void swap(union Vertice *v1, union Vertice *v2);

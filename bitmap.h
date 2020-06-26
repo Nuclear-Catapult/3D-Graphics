@@ -6,15 +6,14 @@
 
 #define HEIGHT 500
 #define WIDTH 500
-#define BITMAP_SIZE HEIGHT * WIDTH * sizeof(pixel_t)
+#define BITMAP_SIZE HEIGHT * WIDTH * sizeof(struct Pixel)
 
-typedef struct {
+struct Pixel {
 	uint8_t red;
 	uint8_t green;
 	uint8_t blue;
-} pixel_t;
+}*bitmap;
 
-pixel_t *bitmap;
 uint16_t *depth_buffer;
 
 void alloc_bitmap();

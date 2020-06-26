@@ -2,10 +2,10 @@
 #include "line.h"
 #include "vertice.h"
 
-typedef struct {
-	Vertice v1;
-	Vertice v2;
-	Vertice v3;
-} triangle_t;
+struct Triangle{
+	union Vertice v1;
+	union Vertice v2;
+	union Vertice v3;
+};
 
-void draw_triangle(triangle_t *this);
+void draw_triangle(struct Triangle *this);

@@ -29,7 +29,7 @@ void write_bmp()
 
 	FILE *f = fopen(str, "wb");
 	fwrite(&BM, sizeof(char), offset, f);
-	fwrite(bitmap, sizeof(pixel_t), BITMAP_SIZE, f);
+	fwrite(bitmap, sizeof(struct Pixel), BITMAP_SIZE, f);
 
 	// refresh buffers
 	memset(bitmap, 0, BITMAP_SIZE);
