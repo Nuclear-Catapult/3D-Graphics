@@ -8,11 +8,13 @@
 #define BLUE 0x0000ff
 #define PINK 0xff00ff
 
-struct Triangle{
-	struct Vertice v1;
-	struct Vertice v2;
-	struct Vertice v3;
-	uint16_t color;
+union Triangle{
+	struct {
+		struct Vertice v1;
+		struct Vertice v2;
+		struct Vertice v3;
+	};
+	float ar[6];
 };
 
-void draw_triangle(struct Triangle *this);
+void draw_triangle(union Triangle *this, uint32_t color);

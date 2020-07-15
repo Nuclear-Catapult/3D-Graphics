@@ -15,5 +15,6 @@ struct Pixel {
 };
 
 extern struct Pixel bitmap[HEIGHT * WIDTH];
+extern uint32_t Z_Buffer[HEIGHT * WIDTH];
 
 void write_bmp();
