@@ -1,4 +1,5 @@
 #pragma once
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,13 +9,11 @@
 #define WIDTH 500
 
 struct Pixel {
-	uint8_t red;
-	uint8_t green;
 	uint8_t blue;
+	uint8_t green;
+	uint8_t red;
 };
 
-struct Pixel bitmap[HEIGHT * WIDTH];
-
-// uint16_t *depth_buffer;
+extern struct Pixel bitmap[HEIGHT * WIDTH];
 
 void write_bmp();

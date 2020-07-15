@@ -2,4 +2,6 @@
 
 #include <stdint.h>
 
-void draw_line(int16_t y, int16_t right, int16_t left);
+void draw_line(uint16_t y, uint16_t right, uint16_t left);
+
+void set_color(uint32_t color);
