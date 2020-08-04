@@ -37,7 +37,7 @@ void fillBottomFlatTriangle(struct Vertice v1, float v2DOTx, struct Vertice v3)
 	}
 }
 
-void draw_triangle(union Triangle *this, uint32_t color)
+void draw_triangle(struct Triangle *this, uint32_t color)
 {
 	set_color(color);
 
