@@ -1,5 +1,7 @@
 #pragma once
 
+#define DISTANCE 1000
+
 void project2D(float* matrix3D, float* matrix2D, uint32_t p_count);
 
 void derive_q(float q[4], float axis[3], float radians);

@@ -3,8 +3,7 @@
 
 #include "triangle.h"
 #include "bitmap.h"
-
-const int distance = 1000;
+#include "transformations.h"
 
 #define RED 0xff0000
 #define YELLOW 0xffff00
@@ -13,16 +12,13 @@ const int distance = 1000;
 #define BLUE 0x0000ff
 #define PINK 0xff00ff
 
-struct Triangle3D {
-	float ar[12];
-	uint32_t color;
-};
-
 int compare_function(const void *v_a, const void *v_b)
 {
 	struct Triangle3D *a = (struct Triangle3D *) v_a;
 	struct Triangle3D *b = (struct Triangle3D *) v_b;
-	return a->ar[2] + a->ar[6] + a->ar[10] - b->ar[2] - b->ar[6] - b->ar[10];
+	float result = a->ar[2] + a->ar[6] + a->ar[10] - b->ar[2] - b->ar[6] - b->ar[10];
+//	if (result)
+		return result;
 }
 
 int main()
@@ -82,17 +78,18 @@ int main()
 		for (int j = 0; j < 12; j++)
 			cube[i].ar[j] *= 50;
 
-	qsort(cube, 12, sizeof(struct Triangle3D), compare_function);
+	float q[4];
+	float axis[] = {0, 0, 1};
+	derive_q(q, axis, 0.05);
+	float R[9];
+	derive_R(R, q);
+	for (int frame = 0; frame < 1000; frame++) {
+		for (int i = 0; i < 12; i++)
+			rotate(R, cube[i].ar, 3);
+		qsort(cube, 12, sizeof(struct Triangle3D), compare_function);
 
-	float p_cube[6];
-	for (int i = 0; i < 12; i++) {
-		for (int j = 0; j < 3; j++) {
-			float divisor = 1 - (cube[i].ar[4*j+2] + 100) / distance;
-			p_cube[j*2  ] = (cube[i].ar[4*j] + 200) / divisor;
-			p_cube[j*2+1] = (cube[i].ar[4*j+1] + 200) / divisor;
-		}
-		draw_triangle((struct Triangle*)p_cube, cube[i].color);
+		for (int i = 0; i < 12; i++)
+			draw_triangle(&cube[i]);
+		write_bmp();
 	}
-
-	write_bmp();
 }

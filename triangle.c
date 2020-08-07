@@ -1,6 +1,10 @@
 #include "triangle.h"
 #include "line.h"
 
+#define DISTANCE 1000
+
+// http://www.sunshine2k.de/coding/java/TriangleRasterization/TriangleRasterization.html
+
 void fillTopFlatTriangle(struct Vertice v1, struct Vertice v2, float v3DOTx)
 {
 	// v2.y == v3.y
@@ -37,21 +41,27 @@ void fillBottomFlatTriangle(struct Vertice v1, float v2DOTx, struct Vertice v3)
 	}
 }
 
-void draw_triangle(struct Triangle *this, uint32_t color)
+void draw_triangle(struct Triangle3D *t3D)
 {
-	set_color(color);
+	union Triangle this;
+	for (int j = 0; j < 3; j++) {
+		float divisor = 1 - (t3D->ar[4*j+2] + 100) / DISTANCE;
+		this.ar[j*2  ] = (t3D->ar[4*j] + 200) / divisor;
+		this.ar[j*2+1] = (t3D->ar[4*j+1] + 200) / divisor;
+	}
+	set_color(t3D->color);
 
-	if (this->v1.y > this->v2.y)
-		swap(&this->v1, &this->v2);
-	if (this->v2.y > this->v3.y)
-		swap(&this->v2, &this->v3);
-	if (this->v1.y > this->v2.y)
-		swap(&this->v1, &this->v2);
+	if (this.v1.y > this.v2.y)
+		swap(&this.v1, &this.v2);
+	if (this.v2.y > this.v3.y)
+		swap(&this.v2, &this.v3);
+	if (this.v1.y > this.v2.y)
+		swap(&this.v1, &this.v2);
 
 	// v1.y <= v2.y <= v3.y
-	float newX = (this->v1.x +
-	(this->v2.y - this->v1.y) / (this->v3.y - this->v1.y) *
-	(this->v3.x - this->v1.x));
-	fillTopFlatTriangle(this->v1, this->v2, newX);
-	fillBottomFlatTriangle(this->v2, newX, this->v3);
+	float newX = (this.v1.x +
+	(this.v2.y - this.v1.y) / (this.v3.y - this.v1.y) *
+	(this.v3.x - this.v1.x));
+	fillTopFlatTriangle(this.v1, this.v2, newX);
+	fillBottomFlatTriangle(this.v2, newX, this.v3);
 }

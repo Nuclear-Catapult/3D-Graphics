@@ -5,12 +5,10 @@
 
 #include "transformations.h"
 
-const float distance = 1000;
-
 float projection[] = {
 	1, 0, 0, 0,
 	0, 1, 0, 0,
-	0, 0, 0, -1/distance,
+	0, 0, 0, -1/DISTANCE,
 	0, 0, 0, 1
 };
 
@@ -71,7 +69,7 @@ void rotate(float R[9], float* p, uint32_t p_count)
 #undef _j_
 #undef _k_
 #undef _r_
-
+/*
 int main()
 {
 
@@ -109,3 +107,4 @@ int main()
 	for (int i = 0; i < 32; i++)
 	printf("%f\n", PD[i]);
 }
+*/
