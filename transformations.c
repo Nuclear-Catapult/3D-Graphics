@@ -12,7 +12,7 @@ float projection[] = {
 	0, 0, 0, 1
 };
 
-void project2D(float* matrix3D, float* matrix2D, uint32_t p_count)
+void project2D(const float* matrix3D, float* matrix2D, uint32_t p_count)
 {
 	memset(matrix2D, 0, sizeof(float)*p_count*4);
 	for (int i = 0; i < p_count; i++)
@@ -36,7 +36,7 @@ void derive_q(float q[4], const float axis[3], float radians)
 	q[_r_] = cos(radians);
 }
 
-// https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation##Quaternion-derived_rotation_matrix
+// https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Quaternion-derived_rotation_matrix
 void derive_R(float R[9], float q[4])
 {
 	// In this program, s = 2||q||^-2 whereas on Wikipedia, s = ||q||^-2

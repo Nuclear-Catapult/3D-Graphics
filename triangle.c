@@ -17,13 +17,12 @@ void fillTopFlatTriangle(const union Triangle half, const union Triangle *t2D, c
 	float curx2 = half.v1.x;
 
 	for (int i = half.v1.y; i <= half.v2.y; i++) {
-		draw_line((uint16_t)curx2, i, (uint16_t)curx1);
+		draw_line((uint16_t)curx2, i, (uint16_t)curx1, t2D, t3D);
 		curx1 += invslope1;
 		curx2 += invslope2;
 	}
 }
 
-//void fillBottomFlatTriangle(struct Vertice v1, float v2DOTx, struct Vertice v3, union Triangle *t2D, struct Triangle3D *t3D)
 void fillBottomFlatTriangle(const union Triangle half, union Triangle *t2D, struct Triangle3D *t3D)
 {
 	// v1.y == v2.y
@@ -36,7 +35,7 @@ void fillBottomFlatTriangle(const union Triangle half, union Triangle *t2D, stru
 	float curx2 = half.v3.x;
 
 	for (int i = half.v3.y; i > half.v1.y; i--) {
-		draw_line((uint16_t)curx2, i, (uint16_t)curx1);
+		draw_line((uint16_t)curx2, i, (uint16_t)curx1, t2D, t3D);
 		curx1 -= invslope1;
 		curx2 -= invslope2;
 	}
@@ -64,6 +63,5 @@ void draw_triangle(struct Triangle3D *t3D)
 	(this.v2.y - this.v1.y) / (this.v3.y - this.v1.y) *
 	(this.v3.x - this.v1.x));
 	fillTopFlatTriangle((union Triangle) { .v1 = this.v1, .v2 = this.v2, .v3.x = newX}, &this, t3D);
-//	fillBottomFlatTriangle(this.v2, newX, this.v3, &this, t3D);
 	fillBottomFlatTriangle((union Triangle) { .v1 = this.v2, .v2.x = newX, .v3 = this.v3 }, &this, t3D);
 }

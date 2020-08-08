@@ -10,7 +10,7 @@ void set_color(uint32_t color)
 	current_color.red = (color >> 16) % 256;
 }
 
-void draw_line(uint16_t x, uint16_t y, uint16_t right)
+void draw_line(uint16_t x, uint16_t y, uint16_t right, const union Triangle *t2D, const struct Triangle3D *t3D)
 {
 	int start = WIDTH * y;
 	while (x++ <= right)

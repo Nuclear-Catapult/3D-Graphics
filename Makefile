@@ -14,7 +14,7 @@ triangle.o: triangle.c triangle.h line.h
 vertice.o: vertice.c vertice.h
 	gcc -g -c vertice.c
 
-line.o: line.c line.h bitmap.h
+line.o: line.c line.h bitmap.h triangle.h
 	gcc -g -c line.c
 
 bitmap.o: bitmap.c bitmap.h vertice.h
