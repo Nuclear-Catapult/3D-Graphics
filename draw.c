@@ -17,8 +17,7 @@ int compare_function(const void *v_a, const void *v_b)
 	struct Triangle3D *a = (struct Triangle3D *) v_a;
 	struct Triangle3D *b = (struct Triangle3D *) v_b;
 	float result = a->ar[2] + a->ar[6] + a->ar[10] - b->ar[2] - b->ar[6] - b->ar[10];
-//	if (result)
-		return result;
+	return result;
 }
 
 int main()
