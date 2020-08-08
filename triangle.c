@@ -23,7 +23,7 @@ void fillTopFlatTriangle(const union Triangle half, const union Triangle *t2D, c
 	}
 }
 
-void fillBottomFlatTriangle(const union Triangle half, union Triangle *t2D, struct Triangle3D *t3D)
+void fillBottomFlatTriangle(const union Triangle half, const union Triangle *t2D, const struct Triangle3D *t3D)
 {
 	// v1.y == v2.y
 	float invslope1 = (half.v3.x - half.v1.x) / (half.v3.y - half.v1.y);
@@ -46,17 +46,23 @@ void draw_triangle(struct Triangle3D *t3D)
 	set_color(t3D->color);
 	union Triangle this;
 	for (int j = 0; j < 3; j++) {
-		float divisor = 1 - (t3D->ar[4*j+2] + 100) / DISTANCE;
-		this.ar[j*2  ] = (t3D->ar[4*j] + 200) / divisor;
-		this.ar[j*2+1] = (t3D->ar[4*j+1] + 200) / divisor;
+		float divisor = 1 - (t3D->ar[4*j+2]) / DISTANCE;
+		this.ar[j*2  ] = (t3D->ar[4*j]) / divisor;
+		this.ar[j*2+1] = (t3D->ar[4*j+1]) / divisor;
 	}
 
-	if (this.v1.y > this.v2.y)
+	if (this.v1.y > this.v2.y) {
 		swap(&this.v1, &this.v2);
-	if (this.v2.y > this.v3.y)
+		swap3D(&t3D->ar[0], &t3D->ar[4]);
+	}
+	if (this.v2.y > this.v3.y) {
 		swap(&this.v2, &this.v3);
-	if (this.v1.y > this.v2.y)
+		swap3D(&t3D->ar[4], &t3D->ar[8]);
+	}
+	if (this.v1.y > this.v2.y) {
 		swap(&this.v1, &this.v2);
+		swap3D(&t3D->ar[0], &t3D->ar[4]);
+	}
 
 	// v1.y <= v2.y <= v3.y
 	float newX = (this.v1.x +

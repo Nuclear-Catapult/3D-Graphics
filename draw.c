@@ -90,12 +90,24 @@ int main()
 	derive_R(R, q);
 
 	for (int frame = 0; frame < 1000; frame++) {
-		for (int i = 0; i < 12; i++)
+		for (int i = 0; i < 12; i++) {
 			rotate(R, cube[i].ar, 3);
+			for (int j = 0; j < 3; j++) {
+				cube[i].ar[j*4] += 200;
+				cube[i].ar[j*4+1] += 200;
+				cube[i].ar[j*4+2] += 200;
+			}
+		}
 		qsort(cube, 12, sizeof(struct Triangle3D), compare_function);
 
-		for (int i = 0; i < 12; i++)
+		for (int i = 0; i < 12; i++) {
 			draw_triangle(&cube[i]);
+			for (int j = 0; j < 3; j++) {
+				cube[i].ar[j*4] -= 200;
+				cube[i].ar[j*4+1] -= 200;
+				cube[i].ar[j*4+2] -= 200;
+			}
+		}
 		write_bmp();
 	}
 }

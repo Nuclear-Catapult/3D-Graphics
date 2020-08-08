@@ -7,3 +7,4 @@ struct Vertice {
 };
 
 void swap(struct Vertice *v1, struct Vertice *v2);
+void swap3D(float v1[3], float v2[3]);
