@@ -17,7 +17,7 @@ void fillTopFlatTriangle(struct Vertice v1, struct Vertice v2, float v3DOTx)
 	float curx2 = v1.x;
 
 	for (int i = v1.y; i <= v2.y; i++) {
-		draw_line(i, (uint16_t)curx1, (uint16_t)curx2);
+		draw_line((uint16_t)curx2, i, (uint16_t)curx1);
 		curx1 += invslope1;
 		curx2 += invslope2;
 	}
@@ -35,7 +35,7 @@ void fillBottomFlatTriangle(struct Vertice v1, float v2DOTx, struct Vertice v3)
 	float curx2 = v3.x;
 
 	for (int i = v3.y; i > v1.y; i--) {
-		draw_line(i, (uint16_t)curx1, (uint16_t)curx2);
+		draw_line((uint16_t)curx2, i, (uint16_t)curx1);
 		curx1 -= invslope1;
 		curx2 -= invslope2;
 	}

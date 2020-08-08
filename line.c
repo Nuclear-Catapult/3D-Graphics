@@ -10,16 +10,9 @@ void set_color(uint32_t color)
 	current_color.red = (color >> 16) % 256;
 }
 
-void draw_line(uint16_t y, uint16_t right, uint16_t left)
+void draw_line(uint16_t x, uint16_t y, uint16_t right)
 {
-	int start = WIDTH * y + left;
-	for (int i = start; i <= start - left + right; i++) {
-		bitmap[i] = current_color;
-		/*
-		struct Pixel *pixel = bitmap + i;
-		pixel->red = 255;
-		pixel->green = 0;
-		pixel->blue = 0;
-		*/
-	}
+	int start = WIDTH * y;
+	while (x++ <= right)
+		bitmap[start+x] = current_color;
 }

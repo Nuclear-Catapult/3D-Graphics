@@ -80,9 +80,17 @@ int main()
 
 	float q[4];
 	float axis[] = {0, 0, 1};
-	derive_q(q, axis, 0.05);
+	derive_q(q, axis, 0.3);
 	float R[9];
 	derive_R(R, q);
+
+	for (int i = 0; i < 12; i++)
+		rotate(R, cube[i].ar, 3);
+
+	float axis2[] = {0, 1, 0};
+	derive_q(q, axis2, 0.05);
+	derive_R(R, q);
+
 	for (int frame = 0; frame < 1000; frame++) {
 		for (int i = 0; i < 12; i++)
 			rotate(R, cube[i].ar, 3);

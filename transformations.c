@@ -27,7 +27,7 @@ void project2D(float* matrix3D, float* matrix2D, uint32_t p_count)
 #define _r_ 3
 
 // https://www.youtube.com/watch?v=zjMuIxRvygQ&t=4m01s
-void derive_q(float q[4], float axis[3], float radians)
+void derive_q(float q[4], const float axis[3], float radians)
 {
 	radians /= 2;
 	float sin_multiplier = sin(radians);
