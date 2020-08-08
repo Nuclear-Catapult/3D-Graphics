@@ -27,7 +27,7 @@ void write_bmp()
 
 	FILE *f = fopen(str, "wb");
 	fwrite(&BM, 1, offset, f);
-	fwrite(bitmap, sizeof(struct Pixel), BITMAP_SIZE, f);
+	fwrite(bitmap, 1, BITMAP_SIZE, f);
 
 	// clear bitmap and max Z_Buffer
 	memset(bitmap, 0, BITMAP_SIZE);
