@@ -18,6 +18,13 @@ const uint64_t unknown3 = 0xB1300000B13;
 const uint64_t zero_padding2 = 0;
 
 struct Pixel bitmap[HEIGHT * WIDTH] = {0};
+uint32_t Z_Buffer[HEIGHT * WIDTH];
+
+__attribute__ ((constructor))
+void max_Z_Buffer()
+{
+	memset(Z_Buffer, 255, sizeof(Z_Buffer));
+}
 
 void write_bmp()
 {
@@ -31,6 +38,7 @@ void write_bmp()
 
 	// clear bitmap and max Z_Buffer
 	memset(bitmap, 0, BITMAP_SIZE);
+	memset(Z_Buffer, 255, sizeof(Z_Buffer));
 
 	fclose(f);
 }
