@@ -1,5 +1,7 @@
 # 3D-Graphics
 
-Requires FFmpeg unless you want to flip through 1000 .bmp files.
+Program shits out 1000 bmp files and uses FFmpeg to concatenate them into an mp4.
 
-I'm currently using Z-buffering and plan on switching to ray tracing.
+I'm not sure why the corner anomalies occur. I consider myself done with this project.
+
+![Rotating Cube](demo.gif)
